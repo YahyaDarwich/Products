@@ -6,8 +6,11 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
 import androidx.room.Update
+import androidx.sqlite.db.SupportSQLiteQuery
 import kotlinx.coroutines.flow.Flow
+
 
 @Dao
 interface ProductDao {
@@ -22,6 +25,9 @@ interface ProductDao {
 
     @Query("Select * from products WHERE id = :productId")
     fun getProduct(productId: Int): Flow<Product>
+
+    @RawQuery
+    fun insertDataRawFormat(query: SupportSQLiteQuery): Boolean?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addProduct(product: Product)
