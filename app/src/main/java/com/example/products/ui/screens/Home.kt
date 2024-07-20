@@ -99,7 +99,7 @@ import kotlinx.coroutines.launch
 
 object HomeDestination : NavigationDestination {
     override val source: String = "home"
-    override val titleRes: Int = R.string.app_name
+    override val titleRes: Int = R.string.home_nav_title
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
