@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Products</string>
+    <string name="home_nav_title">Darwich Market</string>
     <string name="add_product">Add Product</string>
     <string name="edit_product">Edit Product</string>
     <string name="settings">Settings</string>
@@ -15,11 +16,19 @@
     <string name="delete_dropdown">Delete</string>
     <string name="search_field_placeHolder">Product name</string>
     <string name="dollar_lbp">1 US Dollar/LBP</string>
-    <string name="default_settings_title">Set default profit and currency to be applied to new products.</string>
+    <string name="default_settings_section_title">Set default profit and currency to be applied to new products.</string>
+    <string name="import_export_section_title">Data Import/Export</string>
+    <string name="import_title">Import your products data into app database</string>
+    <string name="all_products_will_be_deleted">Note: all products will be deleted</string>
+    <string name="export_title">Export your products data as .csv file to keep it safe in your device storage</string>
+    <string name="not_csv_file">You should choose only csv files</string>
     <string name="no_available_items">Sorry, we haven\'t found any products \n click add to add more.</string>
     <string name="save">Save</string>
+    <string name="import_data">Import</string>
+    <string name="export_data">Export</string>
     <string name="update">Update</string>
     <string name="add">Add</string>
     <string name="products_nb">%d products</string>
-    <string name="data_exported_successfully">"Products data exported successfully"</string>
+    <string name="data_exported_successfully">"Products data exported successfully, the file name is "</string>
+    <string name="data_imported_successfully">"Products data imported successfully"</string>
 </resources>
