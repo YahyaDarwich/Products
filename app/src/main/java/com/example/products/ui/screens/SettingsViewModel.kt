@@ -70,8 +70,6 @@ class SettingsViewModel(
     }
 
     fun export() {
-        showLoading()
-
         viewModelScope.launch(Dispatchers.IO) {
             val exportDir = File(getExternalStorageDirectory(), "")
             if (!exportDir.exists()) {
@@ -99,11 +97,8 @@ class SettingsViewModel(
                     localStorage.context.getString(R.string.data_exported_successfully) + fileName,
                     Toast.LENGTH_LONG
                 )
-
-                hideLoading()
             } catch (sqlEx: Exception) {
                 showToast(sqlEx.message, Toast.LENGTH_SHORT)
-                hideLoading()
             }
         }
     }
