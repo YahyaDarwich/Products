@@ -70,6 +70,8 @@ class SettingsViewModel(
     }
 
     fun export() {
+        showLoading()
+
         viewModelScope.launch(Dispatchers.IO) {
             val exportDir = File(getExternalStorageDirectory(), "")
             if (!exportDir.exists()) {
@@ -97,14 +99,17 @@ class SettingsViewModel(
                     localStorage.context.getString(R.string.data_exported_successfully) + fileName,
                     Toast.LENGTH_LONG
                 )
+
+                hideLoading()
             } catch (sqlEx: Exception) {
                 showToast(sqlEx.message, Toast.LENGTH_SHORT)
+                hideLoading()
             }
         }
     }
 
     fun readCsvFileAndImport(fileUri: Uri) {
-        isImportingData.value = true
+        showLoading()
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -160,12 +165,20 @@ class SettingsViewModel(
                     showToast(R.string.data_imported_successfully, Toast.LENGTH_LONG)
                 }
 
-                isImportingData.value = false
+                hideLoading()
             } catch (e: Exception) {
                 showToast(e.message, Toast.LENGTH_LONG)
-                isImportingData.value = false
+                hideLoading()
             }
         }
+    }
+
+    private fun showLoading() {
+        isImportingData.value = true
+    }
+
+    private fun hideLoading() {
+        isImportingData.value = false
     }
 
     private suspend fun showToast(message: String?, duration: Int) {
