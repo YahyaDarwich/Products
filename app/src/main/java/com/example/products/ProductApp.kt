@@ -35,10 +35,8 @@ fun ProductsTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior? = null,
     canNavigateBack: Boolean,
     showSettings: Boolean = false,
-    showExportIcon: Boolean = false,
     onBack: () -> Unit = {},
     onClickSettings: () -> Unit = {},
-    onClickExport: () -> Unit = {}
 ) {
     TopAppBar(
         title = {
@@ -62,15 +60,6 @@ fun ProductsTopAppBar(
             if (showSettings) {
                 IconButton(onClick = onClickSettings) {
                     Icon(imageVector = Icons.Filled.Settings, contentDescription = "settings")
-                }
-            }
-
-            if (showExportIcon) {
-                IconButton(onClick = onClickExport) {
-                    Icon(
-                        painter = painterResource(R.drawable.baseline_import_export_24),
-                        contentDescription = "export data"
-                    )
                 }
             }
         }
