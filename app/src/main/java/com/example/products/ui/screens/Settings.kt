@@ -71,7 +71,7 @@ fun Settings(
             if (result.resultCode == Activity.RESULT_OK) {
                 val uri = result.data?.data
                 if (uri != null) {
-                    settingsViewModel.readCsvFileAndImport(uri)
+                    settingsViewModel.import(uri)
                 }
             }
         }
