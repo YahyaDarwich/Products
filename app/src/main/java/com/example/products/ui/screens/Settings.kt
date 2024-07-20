@@ -85,7 +85,7 @@ fun Settings(
             )
         }
     ) {
-        if (settingsViewModel.isImportingData.value) {
+        if (settingsViewModel.shouldShowLoading.value) {
             LoadingDialog()
         }
 

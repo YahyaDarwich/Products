@@ -33,7 +33,7 @@ class SettingsViewModel(
 ) : ViewModel() {
     var settingsUiState by mutableStateOf(SettingsUiState())
         private set
-    var isImportingData = mutableStateOf(false)
+    var shouldShowLoading = mutableStateOf(false)
 
     init {
         viewModelScope.launch {
@@ -174,11 +174,11 @@ class SettingsViewModel(
     }
 
     private fun showLoading() {
-        isImportingData.value = true
+        shouldShowLoading.value = true
     }
 
     private fun hideLoading() {
-        isImportingData.value = false
+        shouldShowLoading.value = false
     }
 
     private suspend fun showToast(message: String?, duration: Int) {
