@@ -33,6 +33,7 @@ class SettingsViewModel(
 ) : ViewModel() {
     var settingsUiState by mutableStateOf(SettingsUiState())
         private set
+    var isImportingData = mutableStateOf(false)
 
     init {
         viewModelScope.launch {
@@ -103,6 +104,8 @@ class SettingsViewModel(
     }
 
     fun readCsvFileAndImport(fileUri: Uri) {
+        isImportingData.value = true
+
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 var fileName = fileUri.lastPathSegment
@@ -156,8 +159,11 @@ class SettingsViewModel(
                 if (isImported) {
                     showToast(R.string.data_imported_successfully, Toast.LENGTH_LONG)
                 }
+
+                isImportingData.value = false
             } catch (e: Exception) {
                 showToast(e.message, Toast.LENGTH_LONG)
+                isImportingData.value = false
             }
         }
     }

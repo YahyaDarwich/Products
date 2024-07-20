@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,6 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,17 +35,22 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.products.ProductsTopAppBar
 import com.example.products.R
 import com.example.products.data.ProductCurrency
 import com.example.products.helpers.Tools
 import com.example.products.navigation.NavigationDestination
 import com.example.products.ui.AppViewModelFactory
-import kotlin.system.measureTimeMillis
 
 
 object SettingsDestination : NavigationDestination {
@@ -78,6 +85,10 @@ fun Settings(
             )
         }
     ) {
+        if (settingsViewModel.isImportingData.value) {
+            LoadingDialog()
+        }
+
         SettingsBody(
             modifier = Modifier
                 .padding(it)
@@ -299,6 +310,25 @@ fun SettingsBody(
                 )
             }
         }
+    }
+}
+
+
+@Composable
+fun LoadingDialog() {
+    Dialog(onDismissRequest = {}) {
+        val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.importing_data))
+        val progress by animateLottieCompositionAsState(
+            composition = composition,
+            isPlaying = true,
+            iterations = LottieConstants.IterateForever
+        )
+
+        LottieAnimation(
+            progress = progress,
+            composition = composition,
+            modifier = Modifier.size(150.dp)
+        )
     }
 }
 
