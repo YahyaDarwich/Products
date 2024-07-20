@@ -151,7 +151,9 @@ class SettingsViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                if (fileUri.lastPathSegment?.endsWith(".csv") == false) {
+                if (fileUri.lastPathSegment.toString().isNotBlank() &&
+                    fileUri.lastPathSegment?.endsWith(".csv") == false
+                ) {
                     hideLoading()
                     showToast(R.string.not_csv_file, Toast.LENGTH_LONG)
                     return@launch
