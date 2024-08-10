@@ -51,6 +51,7 @@ import com.example.products.data.ProductCurrency
 import com.example.products.helpers.Tools
 import com.example.products.navigation.NavigationDestination
 import com.example.products.ui.AppViewModelFactory
+import com.example.products.ui.components.AnimatedTextCounter
 
 
 object SettingsDestination : NavigationDestination {
@@ -179,11 +180,19 @@ fun SettingsBody(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
         ) {
-            Text(
-                text = stringResource(id = R.string.product_profit, settingsUiState.profitRate),
-                modifier = Modifier
-                    .weight(1f)
-            )
+
+            Row(
+                modifier = Modifier.weight(1f),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(id = R.string.product_profit_label),
+                    modifier = Modifier.padding(end = 4.dp)
+                )
+                AnimatedTextCounter(count = settingsUiState.profitRate, 80, modifier = Modifier)
+                Text(text = "%")
+            }
 
             Slider(
                 value = settingsUiState.profitRate.toFloat(),

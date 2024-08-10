@@ -9,6 +9,7 @@
     <string name="product_cost">Product cost*</string>
     <string name="product_price">Product price</string>
     <string name="product_profit">Product profit %d%%</string>
+    <string name="product_profit_label">Product profit</string>
     <string name="product_currency">Product currency</string>
     <string name="required_fields">*required fields</string>
     <string name="dollar_currency">$</string>

@@ -38,6 +38,7 @@ import com.example.products.R
 import com.example.products.data.ProductCurrency
 import com.example.products.navigation.NavigationDestination
 import com.example.products.ui.AppViewModelFactory
+import com.example.products.ui.components.AnimatedTextCounter
 import kotlinx.coroutines.launch
 
 object AddProductDestination : NavigationDestination {
@@ -152,10 +153,18 @@ fun AddProductBody(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
         ) {
-            Text(
-                text = stringResource(id = R.string.product_profit, productDetails.profitRate),
-                modifier = Modifier.weight(1f)
-            )
+            Row(
+                modifier = Modifier.weight(1f),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(id = R.string.product_profit_label),
+                    modifier = Modifier.padding(end = 4.dp)
+                )
+                AnimatedTextCounter(count = productDetails.profitRate, 80, modifier = Modifier)
+                Text(text = "%")
+            }
 
             Slider(
                 value = productDetails.profitRate.toFloat(),
