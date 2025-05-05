@@ -2,6 +2,7 @@ package com.example.products.data
 
 import android.database.Cursor
 import androidx.sqlite.db.SupportSQLiteQuery
+import com.example.products.models.Product
 import kotlinx.coroutines.flow.Flow
 
 interface ProductsRepository {

@@ -1,6 +1,7 @@
 package com.example.products
 
 import android.app.Application
+import com.example.products.csv_utils.CSVManager
 import com.example.products.data.AppContainer
 import com.example.products.data.AppDataContainer
 
@@ -9,5 +10,6 @@ class ProductsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         container = AppDataContainer(this)
+        CSVManager.productsRepository = container.productsRepository
     }
 }

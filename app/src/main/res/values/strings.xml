@@ -30,6 +30,16 @@
     <string name="update">Update</string>
     <string name="add">Add</string>
     <string name="products_nb">%d products</string>
-    <string name="data_exported_successfully">"Products data exported successfully, the file name is "</string>
+    <string name="data_exported_successfully">"Products data exported successfully"</string>
     <string name="data_imported_successfully">"Products data imported successfully"</string>
+    <string name="upload_data_title">Data backup to Google Drive</string>
+    <string name="google_account">Google Account</string>
+    <string name="last_backup">Last Backup: </string>
+    <string name="size">Size: </string>
+    <string name="no_backup_available">No backup available!</string>
+    <string name="backup">Backup</string>
+    <string name="successfully_backup_data">Data Backup Successful!</string>
+    <string name="something_wrong_try_again">Something wrong try again!</string>
+    <string name="retry">Retry</string>
+    <string name="automatic_daily_backup">Automatic daily backups</string>
 </resources>

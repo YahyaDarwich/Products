@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.products.ProductsTopAppBar
 import com.example.products.R
-import com.example.products.data.ProductCurrency
+import com.example.products.models.ProductCurrency
 import com.example.products.navigation.NavigationDestination
 import com.example.products.ui.AppViewModelFactory
 import com.example.products.ui.components.AnimatedTextCounter

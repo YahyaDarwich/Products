@@ -9,6 +9,7 @@ import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Update
 import androidx.sqlite.db.SupportSQLiteQuery
+import com.example.products.models.Product
 import kotlinx.coroutines.flow.Flow
 
 

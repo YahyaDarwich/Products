@@ -9,4 +9,9 @@ buildscript {
     extra.apply {
         set("room_version", "2.6.1")
     }
+
+
+    dependencies {
+        classpath(libs.secrets.gradle.plugin)
+    }
 }

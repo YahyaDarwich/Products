@@ -1,9 +1,7 @@
 package com.example.products
 
-import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -15,15 +13,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.products.navigation.ProductsNavGraph
 
 @Composable
-fun ProductApp(navController: NavHostController = rememberNavController()) {
+fun ProductApp(
+    navController: NavHostController = rememberNavController()
+) {
     ProductsNavGraph(navController)
 }
 
@@ -36,7 +33,7 @@ fun ProductsTopAppBar(
     canNavigateBack: Boolean,
     showSettings: Boolean = false,
     onBack: () -> Unit = {},
-    onClickSettings: () -> Unit = {},
+    onClickSettings: () -> Unit = {}
 ) {
     TopAppBar(
         title = {

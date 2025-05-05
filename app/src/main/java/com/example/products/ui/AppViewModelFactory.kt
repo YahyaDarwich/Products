@@ -37,7 +37,9 @@ object AppViewModelFactory {
         initializer {
             SettingsViewModel(
                 LocalStorage(productsApplication().applicationContext),
-                productsApplication().container.productsRepository
+                productsApplication().container.productsRepository,
+                productsApplication().container.googleApiRepository,
+                productsApplication().container.authRepository
             )
         }
     }

@@ -3,13 +3,11 @@ package com.example.products
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.content.PackageManagerCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.compose.ProductsTheme
 
@@ -24,6 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         enableEdgeToEdge()
+
         setContent {
             ProductsTheme {
                 ProductApp()

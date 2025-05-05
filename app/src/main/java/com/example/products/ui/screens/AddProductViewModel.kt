@@ -4,8 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.products.data.Product
-import com.example.products.data.ProductCurrency
+import com.example.products.models.Product
+import com.example.products.models.ProductCurrency
 import com.example.products.data.ProductsRepository
 import com.example.products.helpers.LocalStorage
 import java.text.NumberFormat

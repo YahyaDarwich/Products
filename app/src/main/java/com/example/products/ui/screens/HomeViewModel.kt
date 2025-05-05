@@ -1,12 +1,9 @@
 package com.example.products.ui.screens
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.products.data.Product
+import com.example.products.models.Product
 import com.example.products.data.ProductsRepository
-import com.example.products.helpers.LocalStorage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

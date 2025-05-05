@@ -2,22 +2,32 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
     namespace = "com.example.products"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.products"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("C:\\Users\\yahya\\AndroidStudioProjects\\keystores\\products.jks")
+            keyAlias = "key0"
+            keyPassword = "w'#%)P7z"
+            storePassword = "w'#%)P7z"
         }
     }
 
@@ -28,12 +38,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
         getByName("debug") {
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -43,13 +54,14 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/{AL2.0,LGPL2.1,DEPENDENCIES,INDEX.LIST}"
         }
     }
 }
@@ -64,6 +76,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -86,4 +102,22 @@ dependencies {
 
     // splash screen
     implementation(libs.androidx.core.splashscreen)
+
+    // credential manager
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
+    // drive v3 api
+    implementation(libs.google.api.services.drive)
+
+    // Google Authorization
+    implementation(libs.play.services.auth)
+    implementation(libs.google.auth.library.oauth2.http)
+    implementation("com.google.api-client:google-api-client-android:1.23.0") {
+        exclude("org.apache.httpcomponents", "guava-jdk5")
+    }
+
+    // Worker
+    implementation(libs.androidx.work.runtime.ktx)
 }
