@@ -103,17 +103,11 @@ dependencies {
     // splash screen
     implementation(libs.androidx.core.splashscreen)
 
-    // credential manager
-    implementation(libs.androidx.credentials)
-    implementation(libs.androidx.credentials.play.services.auth)
-    implementation(libs.googleid)
-
     // drive v3 api
     implementation(libs.google.api.services.drive)
 
     // Google Authorization
     implementation(libs.play.services.auth)
-    implementation(libs.google.auth.library.oauth2.http)
     implementation("com.google.api-client:google-api-client-android:1.23.0") {
         exclude("org.apache.httpcomponents", "guava-jdk5")
     }

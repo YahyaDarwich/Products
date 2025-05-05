@@ -1,9 +1,7 @@
 [versions]
 agp = "8.4.0"
 coreSplashscreen = "1.0.1"
-credentialsManager = "1.5.0"
 googleApiServicesDrive = "v3-rev20220815-2.0.0"
-googleAuthLibraryOauth2Http = "1.33.1"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -17,7 +15,6 @@ navigationCompose = "2.7.7"
 playServicesAuth = "21.3.0"
 roomRuntime = "2.6.1"
 uiTextGoogleFonts = "1.6.8"
-googleId = "1.1.1"
 secretsGradlePlugin = "2.0.1"
 retrofit = "2.9.0"
 okhttp = "4.11.0"
@@ -26,16 +23,12 @@ workRuntimeKtx = "2.10.1"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
-androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentialsManager" }
-androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentialsManager" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 google-api-services-drive = { module = "com.google.apis:google-api-services-drive", version.ref = "googleApiServicesDrive" }
-google-auth-library-oauth2-http = { module = "com.google.auth:google-auth-library-oauth2-http", version.ref = "googleAuthLibraryOauth2Http" }
-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleId" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
