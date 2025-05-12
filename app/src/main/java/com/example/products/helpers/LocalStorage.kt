@@ -9,8 +9,16 @@ class LocalStorage(val context: Context) {
         return sharedPreferences.getString(key, defaultValue)
     }
 
-    fun putString(key: String, value: String) {
+    fun putString(key: String, value: String?) {
         sharedPreferences.edit().putString(key, value).apply()
+    }
+
+    fun getLong(key: String, defaultValue: Long = 0L): Long {
+        return sharedPreferences.getLong(key, defaultValue)
+    }
+
+    fun putLong(key: String, value: Long) {
+        sharedPreferences.edit().putLong(key, value).apply()
     }
 
     fun getInt(key: String, defaultValue: Int = 0): Int {

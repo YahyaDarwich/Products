@@ -1,59 +1,37 @@
 package com.example.products.ui.screens
 
-import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.os.Environment.getExternalStorageDirectory
-import android.provider.MediaStore
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.products.BuildConfig
 import com.example.products.R
 import com.example.products.csv_utils.CSVManager
-import com.example.products.csv_utils.CSVReader
-import com.example.products.csv_utils.CSVWriter
 import com.example.products.data.AuthRepository
 import com.example.products.data.AuthResult
 import com.example.products.data.BackupResult
 import com.example.products.data.GoogleApiRepository
 import com.example.products.data.ProductsRepository
 import com.example.products.helpers.LocalStorage
-import com.example.products.helpers.Tools
-import com.example.products.models.Product
 import com.example.products.models.ProductCurrency
 import com.example.products.ui.core.SnackbarAction
 import com.example.products.ui.core.SnackbarController
 import com.example.products.ui.core.SnackbarEvent
 import com.example.products.worker.BackupWorker
 import com.google.android.gms.auth.api.identity.AuthorizationResult
+import com.google.api.client.extensions.android.http.AndroidHttp
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest
+import com.google.api.client.googleapis.auth.oauth2.GoogleOAuthConstants
+import com.google.api.client.json.gson.GsonFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileReader
-import java.io.FileWriter
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
-import java.io.Reader
-import java.io.Writer
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 
 class SettingsViewModel(
@@ -146,17 +124,42 @@ class SettingsViewModel(
     }
 
     fun updateUiState(authorizationResult: AuthorizationResult) {
-        localStorage.putBoolean(SettingsKeys.IS_USER_AUTHORIZED.keyName, true)
-        settingsUiState = settingsUiState.copy(isUserAuthorized = true)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                localStorage.putBoolean(SettingsKeys.IS_USER_AUTHORIZED.keyName, true)
+                settingsUiState = settingsUiState.copy(isUserAuthorized = true)
 
-        val token = authorizationResult.accessToken
-        if (!token.isNullOrEmpty()) {
-            localStorage.putString(SettingsKeys.TOKEN.keyName, token)
-        }
+                val token = authorizationResult.accessToken
+                if (!token.isNullOrEmpty()) {
+                    localStorage.putString(SettingsKeys.ACCESS_TOKEN.keyName, token)
+                }
 
-        if (settingsUiState.userEmail.isNullOrEmpty()) {
-            viewModelScope.launch(Dispatchers.IO) {
-                try {
+                authorizationResult.serverAuthCode?.let {
+                    val tokenResponse = GoogleAuthorizationCodeTokenRequest(
+                        AndroidHttp.newCompatibleTransport(),
+                        GsonFactory.getDefaultInstance(),
+                        GoogleOAuthConstants.TOKEN_SERVER_URL,
+                        BuildConfig.WEB_CLIENT_ID,
+                        BuildConfig.WEB_CLIENT_SECRET,
+                        it,
+                        ""
+                    ).execute()
+
+                    localStorage.putString(
+                        SettingsKeys.ACCESS_TOKEN.keyName,
+                        tokenResponse.accessToken
+                    )
+                    localStorage.putString(
+                        SettingsKeys.REFRESH_TOKEN.keyName,
+                        tokenResponse.refreshToken
+                    )
+                    localStorage.putLong(
+                        SettingsKeys.EXPIRATION_TIME.keyName,
+                        System.currentTimeMillis() + (tokenResponse.expiresInSeconds * 1000)
+                    )
+                }
+
+                if (settingsUiState.userEmail.isNullOrEmpty()) {
                     var email: String? = null
 
                     if (!authorizationResult.toGoogleSignInAccount()?.email.isNullOrEmpty()) {
@@ -172,9 +175,9 @@ class SettingsViewModel(
                         localStorage.putString(SettingsKeys.USER_EMAIL.keyName, email)
                         settingsUiState = settingsUiState.copy(userEmail = email)
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -222,7 +225,7 @@ class SettingsViewModel(
         settingsUiState = settingsUiState.copy(isAutoBackupEnabled = checked)
         if (checked) {
             viewModelScope.launch(Dispatchers.IO) {
-                BackupWorker.enqueue(context, authRepository)
+                BackupWorker.enqueue(context)
             }
         } else {
             BackupWorker.cancel(context)
@@ -293,10 +296,12 @@ enum class SettingsKeys(val keyName: String) {
     PRODUCT_CURRENCY("productCurrency"),
     IS_USER_AUTHORIZED("isUserAuthorized"),
     USER_EMAIL("uer_email"),
-    TOKEN("token"),
+    ACCESS_TOKEN("access_token"),
+    REFRESH_TOKEN("refresh_token"),
     LAST_BACKUP_DATE("last_backup_date"),
     LAST_BACKUP_FILE_SIZE("last_backup_file_size"),
     IS_AUT0_BACKUP_ENABLED("is_auto_backup_enabled"),
+    EXPIRATION_TIME("expiration_time")
 }
 
 sealed interface SettingsAuthResult {
