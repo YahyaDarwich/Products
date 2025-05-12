@@ -8,7 +8,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import com.example.products.data.AuthRepository
+import com.example.products.ProductsApplication
 import com.example.products.data.BackupResult
 import java.time.Duration
 
@@ -19,15 +19,13 @@ class BackupWorker(
     CoroutineWorker(context, params) {
     companion object {
         private val uniqueWorkerName = BackupWorker::class.java.simpleName
-        private lateinit var authRepo: AuthRepository
 
-        fun enqueue(context: Context, authRepository: AuthRepository) {
-            authRepo = authRepository
+        fun enqueue(context: Context) {
             val manager = WorkManager.getInstance(context)
             val constraints =
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
             val requestBuilder =
-                PeriodicWorkRequestBuilder<BackupWorker>(Duration.ofHours(1)).setConstraints(
+                PeriodicWorkRequestBuilder<BackupWorker>(Duration.ofDays(1)).setConstraints(
                     constraints
                 )
 
@@ -45,6 +43,8 @@ class BackupWorker(
 
     override suspend fun doWork(): Result {
         var finalResult: BackupResult = BackupResult.Loading
+        val authRepo = (context.applicationContext as ProductsApplication)
+            .container.authRepository
 
         authRepo.backup(context).collect { result ->
             finalResult = result
