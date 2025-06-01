@@ -33,7 +33,7 @@ class NetworkAppAuthRepository() : AuthRepository {
             .requestOfflineAccess(BuildConfig.WEB_CLIENT_ID, true)
             .build()
     override val backupFileName: String
-        get() = "Products App Data Backup"
+        get() = "Products App Data Backup.csv"
 
     override fun authorize(
         context: Context
@@ -103,6 +103,7 @@ class NetworkAppAuthRepository() : AuthRepository {
 
             val fileMetaData = com.google.api.services.drive.model.File()
             fileMetaData.setName(backupFileName)
+            fileMetaData.setMimeType("text/csv")
 
             val file = File(context.filesDir, "$backupFileName.csv")
             CSVManager.writeCSVFile(FileWriter(file))
