@@ -113,6 +113,10 @@ class CSVWriter @JvmOverloads constructor(
         pw.close()
     }
 
+    fun write(value: String) {
+        pw.write(value)
+    }
+
     companion object {
         /** The character used for escaping quotes.  */
         const val DEFAULT_ESCAPE_CHARACTER: Char = '"'

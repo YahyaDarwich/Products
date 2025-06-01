@@ -92,6 +92,7 @@ class CSVManager {
         fun writeCSVFile(writer: Writer) {
             val csvWriter = CSVWriter(writer)
             val curCSV: Cursor = productsRepository.getAllProductsToExport()
+            csvWriter.write("\uFEFF")
             csvWriter.writeNext(curCSV.columnNames)
             while (curCSV.moveToNext()) {
                 val arrStr = arrayOfNulls<String>(curCSV.columnCount)
